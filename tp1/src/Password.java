@@ -56,7 +56,7 @@ public class Password {
   }
 
   /**
-   * Checks if the given password is strong according to the following criteria:
+   * Checks if the given password is strong according to the following criteria.
    *
    * <ul>
    * <li>Minimum length of 12 characters</li>
@@ -70,9 +70,24 @@ public class Password {
    * @return true if the password is strong, false otherwise
    */
   public static boolean isStrongPassword(String password) {
-    // Code here
+    boolean isLongEnough = password.length() >= 12;
+    if (!isLongEnough) {
+      return false;
+    }
 
-    return false;
+    boolean hasUppercase = false;
+    boolean hasLowercase = false;
+    boolean hasDigit = false;
+    for (char letter : password.toCharArray()) {
+      if (Character.isWhitespace(letter)) {
+        return false;
+      }
+      hasUppercase = hasUppercase || Character.isUpperCase(letter);
+      hasLowercase = hasLowercase || Character.isLowerCase(letter);
+      hasDigit = hasDigit || Character.isDigit(letter);
+    }
+
+    return hasLowercase && hasUppercase && hasDigit;
   }
 
   /**
