@@ -1,6 +1,8 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +11,11 @@ import java.util.Map;
  * Utility class for password hashing using the SHA-256 algorithm.
  */
 public class Password {
+
+  private static final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  private static final String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
+  private static final String DIGITS = "0123456789";
+  private static final String SPECIAL_CHARACTERS = "!@#$%^&*()-_+=<>?";
 
   /**
    * Hashes the provided password using the SHA-256 algorithm.
@@ -101,9 +108,11 @@ public class Password {
   public static HashMap<String, Boolean> checkPasswordsList(
     ArrayList<String> passwords
   ) {
-    // Code here
-
-    return null;
+    HashMap<String, Boolean> pswMap = new HashMap<>();
+    for (String psw : passwords) {
+      pswMap.put(psw, isStrongPassword(psw));
+    }
+    return pswMap;
   }
 
   /**
@@ -119,9 +128,45 @@ public class Password {
    * @return A randomly generated password that meets the security criteria.
    */
   public static String generatePassword(int nbCar) {
-    // Code here
+    List<Character> password = new ArrayList<>();
 
-    return null;
+    SecureRandom random = new SecureRandom();
+
+    password.add(UPPERCASE.charAt(random.nextInt(UPPERCASE.length())));
+    password.add(LOWERCASE.charAt(random.nextInt(LOWERCASE.length())));
+    password.add(DIGITS.charAt(random.nextInt(DIGITS.length())));
+    password.add(
+      SPECIAL_CHARACTERS.charAt(random.nextInt(SPECIAL_CHARACTERS.length()))
+    );
+
+    while (password.size() < nbCar) {
+      int i = random.nextInt(4);
+      switch (i) {
+        case 0:
+          password.add(UPPERCASE.charAt(random.nextInt(UPPERCASE.length())));
+        case 1:
+          password.add(LOWERCASE.charAt(random.nextInt(LOWERCASE.length())));
+        case 2:
+          password.add(DIGITS.charAt(random.nextInt(DIGITS.length())));
+        case 3:
+          password.add(
+            SPECIAL_CHARACTERS.charAt(
+              random.nextInt(SPECIAL_CHARACTERS.length())
+            )
+          );
+      }
+    }
+
+    Collections.shuffle(password);
+
+    // Méthode propre pour obtenir un vrai String
+    StringBuilder sb = new StringBuilder();
+    for (char c : password) {
+      sb.append(c);
+    }
+    String passwordStr = sb.toString();
+
+    return passwordStr;
   }
 
   public static void main(String[] args) {
