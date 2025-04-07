@@ -3,7 +3,7 @@ package fr.ensai.library;
 /**
  * Represents an Item.
  */
-public class Item {
+public abstract class Item {
 
   // Attributes
   private String title;
@@ -45,4 +45,11 @@ public class Item {
   public void setPageCount(int pageCount) {
     this.pageCount = pageCount;
   }
+
+  /**
+   * Abstract method toString.
+   * Forces subclasses to implement their own version.
+   */
+  @Override
+  public abstract String toString();
 }

@@ -3,7 +3,7 @@ package fr.ensai.library;
 /**
  * Represents a Person.
  */
-public class Person {
+public abstract class Person {
 
   // Attributes
   private String name;
@@ -43,4 +43,25 @@ public class Person {
   public void setAge(int age) {
     this.age = age;
   }
+
+  /**
+   * Abstract method equals.
+   * Forces subclasses to implement their own version.
+   */
+  @Override
+  public abstract boolean equals(Object obj);
+
+  /**
+   * Abstract method hashCode.
+   * Forces subclasses to implement their own version.
+   */
+  @Override
+  public abstract int hashCode();
+
+  /**
+   * Abstract method toString.
+   * Forces subclasses to implement their own version.
+   */
+  @Override
+  public abstract String toString();
 }
